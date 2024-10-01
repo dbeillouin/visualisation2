@@ -14,7 +14,7 @@ By examining multiple datasets and applying different statistical techniques, we
 
 You should have a basic understanding of meta-analysis concepts and be familiar with R. If you haven't yet installed the necessary R packages, run the following commands:
 
-```{r}
+```{r "init"}
 #install.packages(c("tidyverse", "metafor", "dmetar", "meta", "metadat", "ggplot2", "reactable", "ggstar", "ggpubr"))
 
 ```
@@ -79,7 +79,7 @@ This shows that adjusting the standard errors to account for the estimated error
 
 We can fit a random-effects model using `rma()` as follows:
 
-```{r,message=FALSE, warning=FALSE}
+```{r  "re", message=FALSE, warning=FALSE}
 res.re <- rma(yi, vi, data=dat)
 summary(res.re)
 
@@ -87,7 +87,7 @@ summary(res.re)
 
 Next, we try fitting the same model with the `lme()` function from the `nlme` package, specifying a variance function for fixed variances:
 
-```{r,message=FALSE, warning=FALSE}
+```{r  "RE lme",message=FALSE, warning=FALSE}
 library(nlme)
 dat$study <- 1:nrow(dat)
 res.lme <- lme(yi ~ 1, random = ~ 1 | study, weights = varFixed(~ vi), data=dat)
@@ -97,7 +97,7 @@ summary(res.lme)
 
 Alternatively, we can use the `lmer()` function from the `lme4` package
 
-```{r,message=FALSE, warning=FALSE}
+```{r  "RE lme4" ,message=FALSE, warning=FALSE}
 library(lme4)
 res.lmer <- lmer(yi ~ 1 + (1 | study), weights = 1/vi, data=dat,
                  control=lmerControl(check.nobs.vs.nlev="ignore", check.nobs.vs.nRE="ignore"))
@@ -113,7 +113,7 @@ summary(res.lmer)
 
 To illustrate, we can factor this constant into the sampling variances and refit the model with `rma()`:
 
-```{r,message=FALSE, warning=FALSE}
+```{r  "comp" ,message=FALSE, warning=FALSE}
 rma(yi, vi * sigma(res.lme)^2, data=dat)
 
 ```
@@ -124,7 +124,7 @@ This yields results consistent with those from `lme()`.
 
 The `meta` package provides a robust alternative for conducting meta-analyses, featuring a range of built-in functions that cater to both fixed-effect and random-effects models. This package streamlines the analysis of various effect sizes, making it accessible for researchers. For example, we can execute a meta-analysis using the `metagen()` function from the `meta` package as follows:
 
-```{r,message=FALSE, warning=FALSE}
+```{r  "meta",message=FALSE, warning=FALSE}
 library(meta)
 res.meta <- metagen(TE = yi, seTE = sqrt(vi), data = dat, sm = "SMD")
 summary(res.meta)
@@ -136,7 +136,7 @@ One of the key advantages of the `meta` package is its user-friendly syntax, whi
 
 Bayesian meta-analysis presents a flexible framework that accommodates the incorporation of prior distributions and quantifies uncertainty in a comprehensive manner. By employing the `brms` package, we can specify a Bayesian random-effects model as follows:
 
-```{r,message=FALSE, warning=FALSE}
+```{r "bayes", message=FALSE, warning=FALSE}
 library(brms)
 
 # Define the response variable and the standard error
@@ -150,8 +150,8 @@ bayes_model <- brm(
   data = dat,
   family = gaussian,
   prior = c(
-    prior(normal(0, 1), class = "Intercept"),   # Prior for the intercept
-    prior(cauchy(0, 1), class = "sd")            # Prior for the standard deviation of the random effect
+    brms::prior(normal(0, 1), class = "Intercept"),   # Prior for the intercept
+    brms::prior(cauchy(0, 1), class = "sd")            # Prior for the standard deviation of the random effect
   ),
   iter = 200,
   warmup = 100,
@@ -162,7 +162,6 @@ bayes_model <- brm(
 
 # Summarize the results
 summary(bayes_model)
-
 
 ```
 
@@ -218,7 +217,7 @@ However, for datasets where linear assumptions are well-supported and computatio
 
 Below is a demonstration of how to fit a meta-forest model and assess the relative importance of moderators:
 
-```{r, message=FALSE, warning=FALSE}
+```{r  "metaforest", message=FALSE, warning=FALSE}
 # Load required libraries
 library(metaforest)
 library(caret)
@@ -306,7 +305,7 @@ The first dataset explores the impact of two effect size measures: Standardized 
 
 -   **Calculation of effect-sizes**
 
-```{r, message=FALSE, warning=FALSE}
+```{r  "ex1", message=FALSE, warning=FALSE}
 
 dat <- metadat::dat.curtis1998
 
@@ -320,7 +319,7 @@ lnRR <- escalc(measure = "ROM", n1i = dat$n1i, n2i = dat$n2i, m1i = dat$m1i, m2i
 
 -   **Model Comparison:**
 
-```{r, message=FALSE, warning=FALSE}
+```{r  "ex1. 2", message=FALSE, warning=FALSE}
 # Fixed-Effect Model (SMD):
 fixed_SMD <- rma(yi = SMD$yi, vi = SMD$vi, method = "FE", data = dat)
 fixed_lnRR <- rma(yi = lnRR$yi, vi = lnRR$vi, method = "FE", data = dat)
@@ -332,7 +331,7 @@ random_m_lnRR <- rma(yi = lnRR$yi, vi = lnRR$vi, method = "REML", data = dat)
 
 -   **Extraction and comparisons of the results**
 
-```{r, message=FALSE, warning=FALSE}
+```{r  "ex1.3", message=FALSE, warning=FALSE}
 # Extract relevant results for comparison
 model_comparison <- data.frame(
   Model = c("Fixed Effect (SMD)", "Random Effect (SMD)", "Fixed Effect (lnRR)", "Random Effect (lnRR)"),
@@ -368,19 +367,19 @@ Here, we calculate Risk Differences (RD) and explore the impact of between-study
 
 -   **Random-Effects Model Using DerSimonian-Laird (DL)**:
 
-```{r, message=FALSE, warning=FALSE}
+```{r  "ex2", message=FALSE, warning=FALSE}
 res_dl <- rma(yi = lnRR$yi, vi = lnRR$vi, method = "DL", data = dat)
 ```
 
 -   **Random-Effects Model Using REML**:
 
-```{r, message=FALSE, warning=FALSE}
+```{r "ex2.1", message=FALSE, warning=FALSE}
 res_reml <- rma(yi = lnRR$yi, vi = lnRR$vi, method = "REML", data = dat)
 ```
 
 -   **Extraction and comparisons of the results**
 
-```{r, message=FALSE, warning=FALSE}
+```{r "ex2.2", message=FALSE, warning=FALSE}
 # Extract relevant results for comparison
 model_comparison2 <- data.frame(
   Model = c("DL", "REML"),
@@ -416,7 +415,7 @@ In hierarchical data structures, three-level models allow us to account for depe
 
 -   **Three-Level model setup**:
 
-```{r, message=FALSE, warning=FALSE}
+```{r "ex3", message=FALSE, warning=FALSE}
 dat<-cbind(dat, lnRR)
 # Three-level meta-analysis
 three_level_m <- rma.mv(yi = yi, V = vi, random = list(~1 | id, ~1 | paper), data = dat)
@@ -568,7 +567,7 @@ Let's illustrate this approach with a random-effects model:
 
 The function `boot.func()` calculates the effect size and variance components based on each bootstrap dataset:
 
-```{r, message=FALSE, warning=FALSE}
+```{r "boot", message=FALSE, warning=FALSE}
 # Load necessary libraries
 library(metafor)
 library(boot)
@@ -619,7 +618,7 @@ print(res.boot)
 
 After running the bootstrap, we can calculate the confidence intervals for the mean effect size (μ\muμ) and the between-study variance (τ2\tau\^2τ2) using different bootstrap methods (normal, basic, studentized, percentile):
 
-```{r, message=FALSE, warning=FALSE}
+```{r "boot1", message=FALSE, warning=FALSE}
 # Confidence intervals for mu
 boot.ci(res.boot, type=c("norm", "basic", "stud", "perc"), index=1:2)
 
@@ -636,7 +635,7 @@ Non-parametric bootstrapping involves generating new datasets by resampling the 
 
 **Defining the Function**
 
-```{r, message=FALSE, warning=FALSE}
+```{r "boot2", message=FALSE, warning=FALSE}
 # Load necessary libraries
 library(metafor)
 library(boot)
@@ -690,7 +689,7 @@ print(res.boot)
 
 After running the bootstrap, we can calculate the confidence intervals for the mean effect size (μ\muμ) and the between-study variance (τ2\tau\^2τ2) using different bootstrap methods (normal, basic, studentized, percentile):
 
-```{r, message=FALSE, warning=FALSE}
+```{r "boot3", message=FALSE, warning=FALSE}
 # Confidence intervals for mu
 boot.ci(res.boot, type=c("norm", "basic", "stud", "perc"), index=1:2)
 

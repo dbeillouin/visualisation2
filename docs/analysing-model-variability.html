@@ -5,25 +5,19 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Analysing model variability | Calculate and combine the effect-sizes</title>
-  <meta name="description" content="<p>This is beta-version of the visualisation exercice.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="description" content="This is beta-version of the visualisation exercice" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Analysing model variability | Calculate and combine the effect-sizes" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="<p>This is beta-version of the visualisation exercice.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta property="og:description" content="This is beta-version of the visualisation exercice" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 3 Analysing model variability | Calculate and combine the effect-sizes" />
   
-  <meta name="twitter:description" content="<p>This is beta-version of the visualisation exercice.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="twitter:description" content="This is beta-version of the visualisation exercice" />
   
 
 <meta name="author" content="Damien Beillouin" />
@@ -242,49 +236,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s illustrate this approach with a random-effects model:</p>
 <p><strong>Defining the Function</strong></p>
 <p>The function <code>boot.func()</code> calculates the effect size and variance components based on each bootstrap dataset:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="analysing-model-variability.html#cb40-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb40-2"><a href="analysing-model-variability.html#cb40-2" tabindex="-1"></a><span class="fu">library</span>(metafor)</span>
-<span id="cb40-3"><a href="analysing-model-variability.html#cb40-3" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb40-4"><a href="analysing-model-variability.html#cb40-4" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="analysing-model-variability.html#cb40-5" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="analysing-model-variability.html#cb40-6" tabindex="-1"></a><span class="co"># 1. Fit the initial random-effects model</span></span>
-<span id="cb40-7"><a href="analysing-model-variability.html#cb40-7" tabindex="-1"></a>initial_model <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data=</span>dat)</span>
-<span id="cb40-8"><a href="analysing-model-variability.html#cb40-8" tabindex="-1"></a></span>
-<span id="cb40-9"><a href="analysing-model-variability.html#cb40-9" tabindex="-1"></a><span class="co"># Extract estimated parameters for later use</span></span>
-<span id="cb40-10"><a href="analysing-model-variability.html#cb40-10" tabindex="-1"></a>mu_estimate <span class="ot">&lt;-</span> <span class="fu">coef</span>(initial_model)</span>
-<span id="cb40-11"><a href="analysing-model-variability.html#cb40-11" tabindex="-1"></a>tau2_estimate <span class="ot">&lt;-</span> initial_model<span class="sc">$</span>tau2</span>
-<span id="cb40-12"><a href="analysing-model-variability.html#cb40-12" tabindex="-1"></a></span>
-<span id="cb40-13"><a href="analysing-model-variability.html#cb40-13" tabindex="-1"></a><span class="co"># 2. Define the Statistic Function for Bootstrapping</span></span>
-<span id="cb40-14"><a href="analysing-model-variability.html#cb40-14" tabindex="-1"></a>boot.func <span class="ot">&lt;-</span> <span class="cf">function</span>(data.boot) {</span>
-<span id="cb40-15"><a href="analysing-model-variability.html#cb40-15" tabindex="-1"></a>  <span class="co"># Fit the random-effects model to the bootstrap data</span></span>
-<span id="cb40-16"><a href="analysing-model-variability.html#cb40-16" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">suppressWarnings</span>(<span class="fu">rma</span>(yi, vi, <span class="at">data=</span>data.boot)), <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
-<span id="cb40-17"><a href="analysing-model-variability.html#cb40-17" tabindex="-1"></a>  </span>
-<span id="cb40-18"><a href="analysing-model-variability.html#cb40-18" tabindex="-1"></a>  <span class="co"># Return NA if the model did not converge</span></span>
-<span id="cb40-19"><a href="analysing-model-variability.html#cb40-19" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;try-error&quot;</span>)) {</span>
-<span id="cb40-20"><a href="analysing-model-variability.html#cb40-20" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span>))  <span class="co"># Return a vector of NAs</span></span>
-<span id="cb40-21"><a href="analysing-model-variability.html#cb40-21" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb40-22"><a href="analysing-model-variability.html#cb40-22" tabindex="-1"></a>    <span class="co"># Extract the estimated effect size (mu), its variance, tau², and its variance</span></span>
-<span id="cb40-23"><a href="analysing-model-variability.html#cb40-23" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="fu">coef</span>(res), <span class="fu">diag</span>(<span class="fu">vcov</span>(res)), res<span class="sc">$</span>tau2, res<span class="sc">$</span>se.tau2<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb40-24"><a href="analysing-model-variability.html#cb40-24" tabindex="-1"></a>  }</span>
-<span id="cb40-25"><a href="analysing-model-variability.html#cb40-25" tabindex="-1"></a>}</span>
-<span id="cb40-26"><a href="analysing-model-variability.html#cb40-26" tabindex="-1"></a></span>
-<span id="cb40-27"><a href="analysing-model-variability.html#cb40-27" tabindex="-1"></a><span class="co"># 3. Define the Data Generation Function for Bootstrapping</span></span>
-<span id="cb40-28"><a href="analysing-model-variability.html#cb40-28" tabindex="-1"></a>data.gen <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, mle) {</span>
-<span id="cb40-29"><a href="analysing-model-variability.html#cb40-29" tabindex="-1"></a>  <span class="co"># Generate effect sizes based on the estimated mu and tau²</span></span>
-<span id="cb40-30"><a href="analysing-model-variability.html#cb40-30" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">yi =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(dat), mle<span class="sc">$</span>mu, <span class="fu">sqrt</span>(mle<span class="sc">$</span>tau2 <span class="sc">+</span> dat<span class="sc">$</span>vi)), <span class="at">vi =</span> dat<span class="sc">$</span>vi)</span>
-<span id="cb40-31"><a href="analysing-model-variability.html#cb40-31" tabindex="-1"></a>}</span>
-<span id="cb40-32"><a href="analysing-model-variability.html#cb40-32" tabindex="-1"></a></span>
-<span id="cb40-33"><a href="analysing-model-variability.html#cb40-33" tabindex="-1"></a><span class="co"># 4. Running the Parametric Bootstrap</span></span>
-<span id="cb40-34"><a href="analysing-model-variability.html#cb40-34" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># For reproducibility</span></span>
-<span id="cb40-35"><a href="analysing-model-variability.html#cb40-35" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> boot<span class="sc">::</span><span class="fu">boot</span>(dat, </span>
-<span id="cb40-36"><a href="analysing-model-variability.html#cb40-36" tabindex="-1"></a>                        <span class="at">statistic =</span> boot.func, </span>
-<span id="cb40-37"><a href="analysing-model-variability.html#cb40-37" tabindex="-1"></a>                        <span class="at">R =</span> <span class="dv">100</span>, </span>
-<span id="cb40-38"><a href="analysing-model-variability.html#cb40-38" tabindex="-1"></a>                        <span class="at">sim =</span> <span class="st">&quot;parametric&quot;</span>, </span>
-<span id="cb40-39"><a href="analysing-model-variability.html#cb40-39" tabindex="-1"></a>                        <span class="at">ran.gen =</span> data.gen, </span>
-<span id="cb40-40"><a href="analysing-model-variability.html#cb40-40" tabindex="-1"></a>                        <span class="at">mle =</span> <span class="fu">list</span>(<span class="at">mu =</span> mu_estimate, <span class="at">tau2 =</span> tau2_estimate))</span>
-<span id="cb40-41"><a href="analysing-model-variability.html#cb40-41" tabindex="-1"></a></span>
-<span id="cb40-42"><a href="analysing-model-variability.html#cb40-42" tabindex="-1"></a><span class="co"># Check results</span></span>
-<span id="cb40-43"><a href="analysing-model-variability.html#cb40-43" tabindex="-1"></a><span class="fu">print</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="analysing-model-variability.html#cb41-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb41-2"><a href="analysing-model-variability.html#cb41-2" tabindex="-1"></a><span class="fu">library</span>(metafor)</span>
+<span id="cb41-3"><a href="analysing-model-variability.html#cb41-3" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb41-4"><a href="analysing-model-variability.html#cb41-4" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="analysing-model-variability.html#cb41-5" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="analysing-model-variability.html#cb41-6" tabindex="-1"></a><span class="co"># 1. Fit the initial random-effects model</span></span>
+<span id="cb41-7"><a href="analysing-model-variability.html#cb41-7" tabindex="-1"></a>initial_model <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data=</span>dat)</span>
+<span id="cb41-8"><a href="analysing-model-variability.html#cb41-8" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="analysing-model-variability.html#cb41-9" tabindex="-1"></a><span class="co"># Extract estimated parameters for later use</span></span>
+<span id="cb41-10"><a href="analysing-model-variability.html#cb41-10" tabindex="-1"></a>mu_estimate <span class="ot">&lt;-</span> <span class="fu">coef</span>(initial_model)</span>
+<span id="cb41-11"><a href="analysing-model-variability.html#cb41-11" tabindex="-1"></a>tau2_estimate <span class="ot">&lt;-</span> initial_model<span class="sc">$</span>tau2</span>
+<span id="cb41-12"><a href="analysing-model-variability.html#cb41-12" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="analysing-model-variability.html#cb41-13" tabindex="-1"></a><span class="co"># 2. Define the Statistic Function for Bootstrapping</span></span>
+<span id="cb41-14"><a href="analysing-model-variability.html#cb41-14" tabindex="-1"></a>boot.func <span class="ot">&lt;-</span> <span class="cf">function</span>(data.boot) {</span>
+<span id="cb41-15"><a href="analysing-model-variability.html#cb41-15" tabindex="-1"></a>  <span class="co"># Fit the random-effects model to the bootstrap data</span></span>
+<span id="cb41-16"><a href="analysing-model-variability.html#cb41-16" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">suppressWarnings</span>(<span class="fu">rma</span>(yi, vi, <span class="at">data=</span>data.boot)), <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
+<span id="cb41-17"><a href="analysing-model-variability.html#cb41-17" tabindex="-1"></a>  </span>
+<span id="cb41-18"><a href="analysing-model-variability.html#cb41-18" tabindex="-1"></a>  <span class="co"># Return NA if the model did not converge</span></span>
+<span id="cb41-19"><a href="analysing-model-variability.html#cb41-19" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;try-error&quot;</span>)) {</span>
+<span id="cb41-20"><a href="analysing-model-variability.html#cb41-20" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span>))  <span class="co"># Return a vector of NAs</span></span>
+<span id="cb41-21"><a href="analysing-model-variability.html#cb41-21" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb41-22"><a href="analysing-model-variability.html#cb41-22" tabindex="-1"></a>    <span class="co"># Extract the estimated effect size (mu), its variance, tau², and its variance</span></span>
+<span id="cb41-23"><a href="analysing-model-variability.html#cb41-23" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="fu">coef</span>(res), <span class="fu">diag</span>(<span class="fu">vcov</span>(res)), res<span class="sc">$</span>tau2, res<span class="sc">$</span>se.tau2<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb41-24"><a href="analysing-model-variability.html#cb41-24" tabindex="-1"></a>  }</span>
+<span id="cb41-25"><a href="analysing-model-variability.html#cb41-25" tabindex="-1"></a>}</span>
+<span id="cb41-26"><a href="analysing-model-variability.html#cb41-26" tabindex="-1"></a></span>
+<span id="cb41-27"><a href="analysing-model-variability.html#cb41-27" tabindex="-1"></a><span class="co"># 3. Define the Data Generation Function for Bootstrapping</span></span>
+<span id="cb41-28"><a href="analysing-model-variability.html#cb41-28" tabindex="-1"></a>data.gen <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, mle) {</span>
+<span id="cb41-29"><a href="analysing-model-variability.html#cb41-29" tabindex="-1"></a>  <span class="co"># Generate effect sizes based on the estimated mu and tau²</span></span>
+<span id="cb41-30"><a href="analysing-model-variability.html#cb41-30" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">yi =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(dat), mle<span class="sc">$</span>mu, <span class="fu">sqrt</span>(mle<span class="sc">$</span>tau2 <span class="sc">+</span> dat<span class="sc">$</span>vi)), <span class="at">vi =</span> dat<span class="sc">$</span>vi)</span>
+<span id="cb41-31"><a href="analysing-model-variability.html#cb41-31" tabindex="-1"></a>}</span>
+<span id="cb41-32"><a href="analysing-model-variability.html#cb41-32" tabindex="-1"></a></span>
+<span id="cb41-33"><a href="analysing-model-variability.html#cb41-33" tabindex="-1"></a><span class="co"># 4. Running the Parametric Bootstrap</span></span>
+<span id="cb41-34"><a href="analysing-model-variability.html#cb41-34" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb41-35"><a href="analysing-model-variability.html#cb41-35" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> boot<span class="sc">::</span><span class="fu">boot</span>(dat, </span>
+<span id="cb41-36"><a href="analysing-model-variability.html#cb41-36" tabindex="-1"></a>                        <span class="at">statistic =</span> boot.func, </span>
+<span id="cb41-37"><a href="analysing-model-variability.html#cb41-37" tabindex="-1"></a>                        <span class="at">R =</span> <span class="dv">100</span>, </span>
+<span id="cb41-38"><a href="analysing-model-variability.html#cb41-38" tabindex="-1"></a>                        <span class="at">sim =</span> <span class="st">&quot;parametric&quot;</span>, </span>
+<span id="cb41-39"><a href="analysing-model-variability.html#cb41-39" tabindex="-1"></a>                        <span class="at">ran.gen =</span> data.gen, </span>
+<span id="cb41-40"><a href="analysing-model-variability.html#cb41-40" tabindex="-1"></a>                        <span class="at">mle =</span> <span class="fu">list</span>(<span class="at">mu =</span> mu_estimate, <span class="at">tau2 =</span> tau2_estimate))</span>
+<span id="cb41-41"><a href="analysing-model-variability.html#cb41-41" tabindex="-1"></a></span>
+<span id="cb41-42"><a href="analysing-model-variability.html#cb41-42" tabindex="-1"></a><span class="co"># Check results</span></span>
+<span id="cb41-43"><a href="analysing-model-variability.html#cb41-43" tabindex="-1"></a><span class="fu">print</span>(res.boot)</span></code></pre></div>
 <pre><code>## 
 ## PARAMETRIC BOOTSTRAP
 ## 
@@ -302,8 +296,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## t4* 2.819226e-05 -8.527037e-07 7.784439e-06</code></pre>
 <p><strong>Extracting Confidence Intervals</strong></p>
 <p>After running the bootstrap, we can calculate the confidence intervals for the mean effect size (μ) and the between-study variance (τ2^2τ2) using different bootstrap methods (normal, basic, studentized, percentile):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="analysing-model-variability.html#cb42-1" tabindex="-1"></a><span class="co"># Confidence intervals for mu</span></span>
-<span id="cb42-2"><a href="analysing-model-variability.html#cb42-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="analysing-model-variability.html#cb43-1" tabindex="-1"></a><span class="co"># Confidence intervals for mu</span></span>
+<span id="cb43-2"><a href="analysing-model-variability.html#cb43-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 100 bootstrap replicates
 ## 
@@ -321,8 +315,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Some basic intervals may be unstable
 ## Some studentized intervals may be unstable
 ## Some percentile intervals may be unstable</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="analysing-model-variability.html#cb44-1" tabindex="-1"></a><span class="co"># Confidence intervals for tau²</span></span>
-<span id="cb44-2"><a href="analysing-model-variability.html#cb44-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="analysing-model-variability.html#cb45-1" tabindex="-1"></a><span class="co"># Confidence intervals for tau²</span></span>
+<span id="cb45-2"><a href="analysing-model-variability.html#cb45-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 100 bootstrap replicates
 ## 
@@ -346,52 +340,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.0.3</span> Non-Parametric Bootstrapping: Step-by-Step Example<a href="analysing-model-variability.html#non-parametric-bootstrapping-step-by-step-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Non-parametric bootstrapping involves generating new datasets by resampling the original data with replacement. We only need to define a single function for this purpose:</p>
 <p><strong>Defining the Function</strong></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="analysing-model-variability.html#cb46-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb46-2"><a href="analysing-model-variability.html#cb46-2" tabindex="-1"></a><span class="fu">library</span>(metafor)</span>
-<span id="cb46-3"><a href="analysing-model-variability.html#cb46-3" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb46-4"><a href="analysing-model-variability.html#cb46-4" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="analysing-model-variability.html#cb46-5" tabindex="-1"></a></span>
-<span id="cb46-6"><a href="analysing-model-variability.html#cb46-6" tabindex="-1"></a><span class="co"># 1. Fit the initial random-effects model</span></span>
-<span id="cb46-7"><a href="analysing-model-variability.html#cb46-7" tabindex="-1"></a>initial_model <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data=</span>dat)</span>
-<span id="cb46-8"><a href="analysing-model-variability.html#cb46-8" tabindex="-1"></a></span>
-<span id="cb46-9"><a href="analysing-model-variability.html#cb46-9" tabindex="-1"></a><span class="co"># Extract estimated parameters for later use</span></span>
-<span id="cb46-10"><a href="analysing-model-variability.html#cb46-10" tabindex="-1"></a>mu_estimate <span class="ot">&lt;-</span> <span class="fu">coef</span>(initial_model)</span>
-<span id="cb46-11"><a href="analysing-model-variability.html#cb46-11" tabindex="-1"></a>tau2_estimate <span class="ot">&lt;-</span> initial_model<span class="sc">$</span>tau2</span>
-<span id="cb46-12"><a href="analysing-model-variability.html#cb46-12" tabindex="-1"></a></span>
-<span id="cb46-13"><a href="analysing-model-variability.html#cb46-13" tabindex="-1"></a><span class="co"># 2. Define the Statistic Function for Bootstrapping</span></span>
-<span id="cb46-14"><a href="analysing-model-variability.html#cb46-14" tabindex="-1"></a>boot.func <span class="ot">&lt;-</span> <span class="cf">function</span>(data.boot, indices) {</span>
-<span id="cb46-15"><a href="analysing-model-variability.html#cb46-15" tabindex="-1"></a>   <span class="co"># Resample the data based on the given indices</span></span>
-<span id="cb46-16"><a href="analysing-model-variability.html#cb46-16" tabindex="-1"></a>   sel <span class="ot">&lt;-</span> data.boot[indices, ]</span>
-<span id="cb46-17"><a href="analysing-model-variability.html#cb46-17" tabindex="-1"></a>   </span>
-<span id="cb46-18"><a href="analysing-model-variability.html#cb46-18" tabindex="-1"></a>   <span class="co"># Fit the random-effects model to the resampled data</span></span>
-<span id="cb46-19"><a href="analysing-model-variability.html#cb46-19" tabindex="-1"></a>   res <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">suppressWarnings</span>(<span class="fu">rma</span>(yi, vi, <span class="at">data=</span>sel)), <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
-<span id="cb46-20"><a href="analysing-model-variability.html#cb46-20" tabindex="-1"></a>   </span>
-<span id="cb46-21"><a href="analysing-model-variability.html#cb46-21" tabindex="-1"></a>   <span class="co"># Return NA if the model did not converge</span></span>
-<span id="cb46-22"><a href="analysing-model-variability.html#cb46-22" tabindex="-1"></a>   <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;try-error&quot;</span>)) {</span>
-<span id="cb46-23"><a href="analysing-model-variability.html#cb46-23" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span>))  <span class="co"># Return a vector of NAs</span></span>
-<span id="cb46-24"><a href="analysing-model-variability.html#cb46-24" tabindex="-1"></a>   } <span class="cf">else</span> {</span>
-<span id="cb46-25"><a href="analysing-model-variability.html#cb46-25" tabindex="-1"></a>      <span class="co"># Extract the estimated effect size (mu), its variance, tau², and its variance</span></span>
-<span id="cb46-26"><a href="analysing-model-variability.html#cb46-26" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">c</span>(<span class="fu">coef</span>(res), <span class="fu">diag</span>(<span class="fu">vcov</span>(res)), res<span class="sc">$</span>tau2, res<span class="sc">$</span>se.tau2<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb46-27"><a href="analysing-model-variability.html#cb46-27" tabindex="-1"></a>   }</span>
-<span id="cb46-28"><a href="analysing-model-variability.html#cb46-28" tabindex="-1"></a>}</span>
-<span id="cb46-29"><a href="analysing-model-variability.html#cb46-29" tabindex="-1"></a></span>
-<span id="cb46-30"><a href="analysing-model-variability.html#cb46-30" tabindex="-1"></a><span class="co"># 3. Define the Data Generation Function for Bootstrapping</span></span>
-<span id="cb46-31"><a href="analysing-model-variability.html#cb46-31" tabindex="-1"></a>data.gen <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, mle) {</span>
-<span id="cb46-32"><a href="analysing-model-variability.html#cb46-32" tabindex="-1"></a>   <span class="co"># Generate effect sizes based on the estimated mu and tau²</span></span>
-<span id="cb46-33"><a href="analysing-model-variability.html#cb46-33" tabindex="-1"></a>   <span class="fu">data.frame</span>(<span class="at">yi =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(dat), mle<span class="sc">$</span>mu, <span class="fu">sqrt</span>(mle<span class="sc">$</span>tau2 <span class="sc">+</span> dat<span class="sc">$</span>vi)), <span class="at">vi =</span> dat<span class="sc">$</span>vi)</span>
-<span id="cb46-34"><a href="analysing-model-variability.html#cb46-34" tabindex="-1"></a>}</span>
-<span id="cb46-35"><a href="analysing-model-variability.html#cb46-35" tabindex="-1"></a></span>
-<span id="cb46-36"><a href="analysing-model-variability.html#cb46-36" tabindex="-1"></a><span class="co"># 4. Running the Parametric Bootstrap</span></span>
-<span id="cb46-37"><a href="analysing-model-variability.html#cb46-37" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># For reproducibility</span></span>
-<span id="cb46-38"><a href="analysing-model-variability.html#cb46-38" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> boot<span class="sc">::</span><span class="fu">boot</span>(dat, </span>
-<span id="cb46-39"><a href="analysing-model-variability.html#cb46-39" tabindex="-1"></a>                        <span class="at">statistic =</span> boot.func, </span>
-<span id="cb46-40"><a href="analysing-model-variability.html#cb46-40" tabindex="-1"></a>                        <span class="at">R =</span> <span class="dv">100</span>, </span>
-<span id="cb46-41"><a href="analysing-model-variability.html#cb46-41" tabindex="-1"></a>                        <span class="at">sim =</span> <span class="st">&quot;parametric&quot;</span>, </span>
-<span id="cb46-42"><a href="analysing-model-variability.html#cb46-42" tabindex="-1"></a>                        <span class="at">ran.gen =</span> data.gen, </span>
-<span id="cb46-43"><a href="analysing-model-variability.html#cb46-43" tabindex="-1"></a>                        <span class="at">mle =</span> <span class="fu">list</span>(<span class="at">mu =</span> mu_estimate, <span class="at">tau2 =</span> tau2_estimate))</span>
-<span id="cb46-44"><a href="analysing-model-variability.html#cb46-44" tabindex="-1"></a></span>
-<span id="cb46-45"><a href="analysing-model-variability.html#cb46-45" tabindex="-1"></a><span class="co"># Check results</span></span>
-<span id="cb46-46"><a href="analysing-model-variability.html#cb46-46" tabindex="-1"></a><span class="fu">print</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="analysing-model-variability.html#cb47-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb47-2"><a href="analysing-model-variability.html#cb47-2" tabindex="-1"></a><span class="fu">library</span>(metafor)</span>
+<span id="cb47-3"><a href="analysing-model-variability.html#cb47-3" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb47-4"><a href="analysing-model-variability.html#cb47-4" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="analysing-model-variability.html#cb47-5" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="analysing-model-variability.html#cb47-6" tabindex="-1"></a><span class="co"># 1. Fit the initial random-effects model</span></span>
+<span id="cb47-7"><a href="analysing-model-variability.html#cb47-7" tabindex="-1"></a>initial_model <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data=</span>dat)</span>
+<span id="cb47-8"><a href="analysing-model-variability.html#cb47-8" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="analysing-model-variability.html#cb47-9" tabindex="-1"></a><span class="co"># Extract estimated parameters for later use</span></span>
+<span id="cb47-10"><a href="analysing-model-variability.html#cb47-10" tabindex="-1"></a>mu_estimate <span class="ot">&lt;-</span> <span class="fu">coef</span>(initial_model)</span>
+<span id="cb47-11"><a href="analysing-model-variability.html#cb47-11" tabindex="-1"></a>tau2_estimate <span class="ot">&lt;-</span> initial_model<span class="sc">$</span>tau2</span>
+<span id="cb47-12"><a href="analysing-model-variability.html#cb47-12" tabindex="-1"></a></span>
+<span id="cb47-13"><a href="analysing-model-variability.html#cb47-13" tabindex="-1"></a><span class="co"># 2. Define the Statistic Function for Bootstrapping</span></span>
+<span id="cb47-14"><a href="analysing-model-variability.html#cb47-14" tabindex="-1"></a>boot.func <span class="ot">&lt;-</span> <span class="cf">function</span>(data.boot, indices) {</span>
+<span id="cb47-15"><a href="analysing-model-variability.html#cb47-15" tabindex="-1"></a>   <span class="co"># Resample the data based on the given indices</span></span>
+<span id="cb47-16"><a href="analysing-model-variability.html#cb47-16" tabindex="-1"></a>   sel <span class="ot">&lt;-</span> data.boot[indices, ]</span>
+<span id="cb47-17"><a href="analysing-model-variability.html#cb47-17" tabindex="-1"></a>   </span>
+<span id="cb47-18"><a href="analysing-model-variability.html#cb47-18" tabindex="-1"></a>   <span class="co"># Fit the random-effects model to the resampled data</span></span>
+<span id="cb47-19"><a href="analysing-model-variability.html#cb47-19" tabindex="-1"></a>   res <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">suppressWarnings</span>(<span class="fu">rma</span>(yi, vi, <span class="at">data=</span>sel)), <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
+<span id="cb47-20"><a href="analysing-model-variability.html#cb47-20" tabindex="-1"></a>   </span>
+<span id="cb47-21"><a href="analysing-model-variability.html#cb47-21" tabindex="-1"></a>   <span class="co"># Return NA if the model did not converge</span></span>
+<span id="cb47-22"><a href="analysing-model-variability.html#cb47-22" tabindex="-1"></a>   <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;try-error&quot;</span>)) {</span>
+<span id="cb47-23"><a href="analysing-model-variability.html#cb47-23" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span>))  <span class="co"># Return a vector of NAs</span></span>
+<span id="cb47-24"><a href="analysing-model-variability.html#cb47-24" tabindex="-1"></a>   } <span class="cf">else</span> {</span>
+<span id="cb47-25"><a href="analysing-model-variability.html#cb47-25" tabindex="-1"></a>      <span class="co"># Extract the estimated effect size (mu), its variance, tau², and its variance</span></span>
+<span id="cb47-26"><a href="analysing-model-variability.html#cb47-26" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">c</span>(<span class="fu">coef</span>(res), <span class="fu">diag</span>(<span class="fu">vcov</span>(res)), res<span class="sc">$</span>tau2, res<span class="sc">$</span>se.tau2<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb47-27"><a href="analysing-model-variability.html#cb47-27" tabindex="-1"></a>   }</span>
+<span id="cb47-28"><a href="analysing-model-variability.html#cb47-28" tabindex="-1"></a>}</span>
+<span id="cb47-29"><a href="analysing-model-variability.html#cb47-29" tabindex="-1"></a></span>
+<span id="cb47-30"><a href="analysing-model-variability.html#cb47-30" tabindex="-1"></a><span class="co"># 3. Define the Data Generation Function for Bootstrapping</span></span>
+<span id="cb47-31"><a href="analysing-model-variability.html#cb47-31" tabindex="-1"></a>data.gen <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, mle) {</span>
+<span id="cb47-32"><a href="analysing-model-variability.html#cb47-32" tabindex="-1"></a>   <span class="co"># Generate effect sizes based on the estimated mu and tau²</span></span>
+<span id="cb47-33"><a href="analysing-model-variability.html#cb47-33" tabindex="-1"></a>   <span class="fu">data.frame</span>(<span class="at">yi =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(dat), mle<span class="sc">$</span>mu, <span class="fu">sqrt</span>(mle<span class="sc">$</span>tau2 <span class="sc">+</span> dat<span class="sc">$</span>vi)), <span class="at">vi =</span> dat<span class="sc">$</span>vi)</span>
+<span id="cb47-34"><a href="analysing-model-variability.html#cb47-34" tabindex="-1"></a>}</span>
+<span id="cb47-35"><a href="analysing-model-variability.html#cb47-35" tabindex="-1"></a></span>
+<span id="cb47-36"><a href="analysing-model-variability.html#cb47-36" tabindex="-1"></a><span class="co"># 4. Running the Parametric Bootstrap</span></span>
+<span id="cb47-37"><a href="analysing-model-variability.html#cb47-37" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb47-38"><a href="analysing-model-variability.html#cb47-38" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> boot<span class="sc">::</span><span class="fu">boot</span>(dat, </span>
+<span id="cb47-39"><a href="analysing-model-variability.html#cb47-39" tabindex="-1"></a>                        <span class="at">statistic =</span> boot.func, </span>
+<span id="cb47-40"><a href="analysing-model-variability.html#cb47-40" tabindex="-1"></a>                        <span class="at">R =</span> <span class="dv">100</span>, </span>
+<span id="cb47-41"><a href="analysing-model-variability.html#cb47-41" tabindex="-1"></a>                        <span class="at">sim =</span> <span class="st">&quot;parametric&quot;</span>, </span>
+<span id="cb47-42"><a href="analysing-model-variability.html#cb47-42" tabindex="-1"></a>                        <span class="at">ran.gen =</span> data.gen, </span>
+<span id="cb47-43"><a href="analysing-model-variability.html#cb47-43" tabindex="-1"></a>                        <span class="at">mle =</span> <span class="fu">list</span>(<span class="at">mu =</span> mu_estimate, <span class="at">tau2 =</span> tau2_estimate))</span>
+<span id="cb47-44"><a href="analysing-model-variability.html#cb47-44" tabindex="-1"></a></span>
+<span id="cb47-45"><a href="analysing-model-variability.html#cb47-45" tabindex="-1"></a><span class="co"># Check results</span></span>
+<span id="cb47-46"><a href="analysing-model-variability.html#cb47-46" tabindex="-1"></a><span class="fu">print</span>(res.boot)</span></code></pre></div>
 <pre><code>## 
 ## PARAMETRIC BOOTSTRAP
 ## 
@@ -409,8 +403,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## t4* 2.819226e-05 -8.527037e-07 7.784439e-06</code></pre>
 <p><strong>Extracting Confidence Intervals</strong></p>
 <p>After running the bootstrap, we can calculate the confidence intervals for the mean effect size (μ) and the between-study variance (τ2^2τ2) using different bootstrap methods (normal, basic, studentized, percentile):</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="analysing-model-variability.html#cb48-1" tabindex="-1"></a><span class="co"># Confidence intervals for mu</span></span>
-<span id="cb48-2"><a href="analysing-model-variability.html#cb48-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analysing-model-variability.html#cb49-1" tabindex="-1"></a><span class="co"># Confidence intervals for mu</span></span>
+<span id="cb49-2"><a href="analysing-model-variability.html#cb49-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 100 bootstrap replicates
 ## 
@@ -428,8 +422,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Some basic intervals may be unstable
 ## Some studentized intervals may be unstable
 ## Some percentile intervals may be unstable</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="analysing-model-variability.html#cb50-1" tabindex="-1"></a><span class="co"># Confidence intervals for tau²</span></span>
-<span id="cb50-2"><a href="analysing-model-variability.html#cb50-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="analysing-model-variability.html#cb51-1" tabindex="-1"></a><span class="co"># Confidence intervals for tau²</span></span>
+<span id="cb51-2"><a href="analysing-model-variability.html#cb51-2" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;stud&quot;</span>, <span class="st">&quot;perc&quot;</span>), <span class="at">index=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 100 bootstrap replicates
 ## 
@@ -455,10 +449,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><strong>Visualization of Bootstrap Distributions</strong></p>
 <p>To visualize the bootstrap distributions, we can create kernel density plots to inspect the variability and shape of the bootstrap samples:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="analysing-model-variability.html#cb52-1" tabindex="-1"></a><span class="co"># Visualize the bootstrap distribution for mu</span></span>
-<span id="cb52-2"><a href="analysing-model-variability.html#cb52-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(res.boot<span class="sc">$</span>t[,<span class="dv">1</span>]), <span class="at">main=</span><span class="st">&quot;Bootstrap Distribution of Mu&quot;</span>)</span>
-<span id="cb52-3"><a href="analysing-model-variability.html#cb52-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">quantile</span>(res.boot<span class="sc">$</span>t[,<span class="dv">1</span>], <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="analysing-model-variability.html#cb53-1" tabindex="-1"></a><span class="co"># Visualize the bootstrap distribution for mu</span></span>
+<span id="cb53-2"><a href="analysing-model-variability.html#cb53-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(res.boot<span class="sc">$</span>t[,<span class="dv">1</span>]), <span class="at">main=</span><span class="st">&quot;Bootstrap Distribution of Mu&quot;</span>)</span>
+<span id="cb53-3"><a href="analysing-model-variability.html#cb53-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">quantile</span>(res.boot<span class="sc">$</span>t[,<span class="dv">1</span>], <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="conclusion-1" class="section level3 hasAnchor" number="3.0.4">
 <h3><span class="header-section-number">3.0.4</span> Conclusion<a href="analysing-model-variability.html#conclusion-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>

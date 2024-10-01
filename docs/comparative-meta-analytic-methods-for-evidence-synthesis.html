@@ -5,25 +5,19 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Comparative meta-analytic methods for evidence synthesis | Calculate and combine the effect-sizes</title>
-  <meta name="description" content="<p>This is beta-version of the visualisation exercice.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="description" content="This is beta-version of the visualisation exercice" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Comparative meta-analytic methods for evidence synthesis | Calculate and combine the effect-sizes" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="<p>This is beta-version of the visualisation exercice.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta property="og:description" content="This is beta-version of the visualisation exercice" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 2 Comparative meta-analytic methods for evidence synthesis | Calculate and combine the effect-sizes" />
   
-  <meta name="twitter:description" content="<p>This is beta-version of the visualisation exercice.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="twitter:description" content="This is beta-version of the visualisation exercice" />
   
 
 <meta name="author" content="Damien Beillouin" />
@@ -373,8 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Formula: yi ~ 1 + (1 | study)
 ##    Data: dat
 ## Weights: 1/vi
-## Control: 
-## lmerControl(check.nobs.vs.nlev = &quot;ignore&quot;, check.nobs.vs.nRE = &quot;ignore&quot;)
+## Control: lmerControl(check.nobs.vs.nlev = &quot;ignore&quot;, check.nobs.vs.nRE = &quot;ignore&quot;)
 ## 
 ## REML criterion at convergence: -14.8
 ## 
@@ -479,8 +472,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-11" tabindex="-1"></a>  <span class="at">data =</span> dat,</span>
 <span id="cb19-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-12" tabindex="-1"></a>  <span class="at">family =</span> gaussian,</span>
 <span id="cb19-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-13" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb19-14"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-14" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),   <span class="co"># Prior for the intercept</span></span>
-<span id="cb19-15"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-15" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>)            <span class="co"># Prior for the standard deviation of the random effect</span></span>
+<span id="cb19-14"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-14" tabindex="-1"></a>    brms<span class="sc">::</span><span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),   <span class="co"># Prior for the intercept</span></span>
+<span id="cb19-15"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-15" tabindex="-1"></a>    brms<span class="sc">::</span><span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>)            <span class="co"># Prior for the standard deviation of the random effect</span></span>
 <span id="cb19-16"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-16" tabindex="-1"></a>  ),</span>
 <span id="cb19-17"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-17" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">200</span>,</span>
 <span id="cb19-18"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-18" tabindex="-1"></a>  <span class="at">warmup =</span> <span class="dv">100</span>,</span>
@@ -491,6 +484,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-23"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-23" tabindex="-1"></a></span>
 <span id="cb19-24"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-24" tabindex="-1"></a><span class="co"># Summarize the results</span></span>
 <span id="cb19-25"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb19-25" tabindex="-1"></a><span class="fu">summary</span>(bayes_model)</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: yi | se(sqrt(vi)) ~ 1 + (1 | study) 
+##    Data: dat (Number of observations: 16) 
+##   Draws: 2 chains, each with iter = 200; warmup = 100; thin = 1;
+##          total post-warmup draws = 200
+## 
+## Multilevel Hyperparameters:
+## ~study (Number of levels: 16) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)     0.11      0.04     0.05     0.19 1.00       63      113
+## 
+## Regression Coefficients:
+##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept     0.15      0.04     0.09     0.24 1.00      180      186
+## 
+## Further Distributional Parameters:
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     0.00      0.00     0.00     0.00   NA       NA       NA
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>This Bayesian approach enables us to derive posterior distributions for the effect sizes, facilitating a more nuanced interpretation of uncertainty compared to traditional frequentist methods. By leveraging Bayesian techniques, researchers can integrate prior knowledge and obtain more robust estimates, especially in cases where sample sizes are limited or when study results exhibit significant variability.</p>
 </div>
 </div>
@@ -537,73 +553,71 @@ Meta-forest is most effective when there is a substantial number of studies and 
 <div id="example-of-implementing-a-meta-forest-model" class="section level4 hasAnchor" number="2.2.3.4">
 <h4><span class="header-section-number">2.2.3.4</span> Example of Implementing a Meta-Forest Model<a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#example-of-implementing-a-meta-forest-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Below is a demonstration of how to fit a meta-forest model and assess the relative importance of moderators:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
-<span id="cb20-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-2" tabindex="-1"></a><span class="fu">library</span>(metaforest)</span>
-<span id="cb20-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-3" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb20-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-4" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-5" tabindex="-1"></a><span class="co"># Hypothetical dataset: Replace this with your own meta-analysis data</span></span>
-<span id="cb20-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb20-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-7" tabindex="-1"></a>data_agro <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb20-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-8" tabindex="-1"></a>  <span class="at">yi =</span> <span class="fu">rnorm</span>(<span class="dv">60</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>),         <span class="co"># Simulated effect sizes</span></span>
-<span id="cb20-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-9" tabindex="-1"></a>  <span class="at">vi =</span> <span class="fu">min</span>(<span class="fl">0.01</span>,<span class="fu">rnorm</span>(<span class="dv">60</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)),        <span class="co"># Variances of the effect sizes</span></span>
-<span id="cb20-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-10" tabindex="-1"></a>  <span class="at">Intervention =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Fruit&quot;</span>, <span class="st">&quot;Mixed&quot;</span>, <span class="st">&quot;Timber&quot;</span>), <span class="dv">60</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb20-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-11" tabindex="-1"></a>  <span class="at">StudyID =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">each =</span> <span class="dv">4</span>),    <span class="co"># 15 unique studies</span></span>
-<span id="cb20-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-12" tabindex="-1"></a>  <span class="at">Region =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Tropical&quot;</span>, <span class="st">&quot;Temperate&quot;</span>), <span class="dv">60</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-13" tabindex="-1"></a>)</span>
-<span id="cb20-14"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-14" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-15" tabindex="-1"></a><span class="co"># Step 1: Run initial MetaForest model with many trees to check convergence</span></span>
-<span id="cb20-16"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-16" tabindex="-1"></a>initial_model <span class="ot">&lt;-</span> <span class="fu">MetaForest</span>(</span>
-<span id="cb20-17"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-17" tabindex="-1"></a>  <span class="at">formula =</span> yi <span class="sc">~</span> Intervention <span class="sc">+</span> Region,</span>
-<span id="cb20-18"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-18" tabindex="-1"></a>  <span class="at">data =</span> data_agro,</span>
-<span id="cb20-19"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-19" tabindex="-1"></a>  <span class="at">study =</span> <span class="st">&quot;StudyID&quot;</span>,</span>
-<span id="cb20-20"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-20" tabindex="-1"></a>  <span class="at">whichweights =</span> <span class="st">&quot;random&quot;</span>,          <span class="co"># Use random-effects weighting scheme</span></span>
-<span id="cb20-21"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-21" tabindex="-1"></a>  <span class="at">num.trees =</span> <span class="dv">15000</span>                 <span class="co"># Set a high number of trees for convergence</span></span>
-<span id="cb20-22"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-22" tabindex="-1"></a>)</span>
-<span id="cb20-23"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-23" tabindex="-1"></a></span>
-<span id="cb20-24"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-24" tabindex="-1"></a><span class="co"># Step 2: Plot convergence trajectory (Mean Squared Error vs. Number of Trees)</span></span>
-<span id="cb20-25"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb20-25" tabindex="-1"></a><span class="fu">plot</span>(initial_model)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-1" tabindex="-1"></a><span class="co"># Step 3: Tune MetaForest model using cross-validation with `caret`</span></span>
-<span id="cb21-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-2" tabindex="-1"></a><span class="co"># Define the parameter grid for tuning</span></span>
-<span id="cb21-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-3" tabindex="-1"></a>tuning_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb21-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-4" tabindex="-1"></a>  <span class="at">whichweights =</span> <span class="fu">c</span>(<span class="st">&quot;random&quot;</span>, <span class="st">&quot;fixed&quot;</span>, <span class="st">&quot;unif&quot;</span>),</span>
-<span id="cb21-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-5" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,                       <span class="co"># Number of variables to possibly split at in each node</span></span>
-<span id="cb21-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-6" tabindex="-1"></a>  <span class="at">min.node.size =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>               <span class="co"># Minimum size of terminal nodes</span></span>
-<span id="cb21-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-7" tabindex="-1"></a>)</span>
-<span id="cb21-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-8" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-9" tabindex="-1"></a><span class="co"># Setup 10-fold cross-validation</span></span>
-<span id="cb21-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-10" tabindex="-1"></a>grouped_cv <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">index =</span> <span class="fu">groupKFold</span>(data_agro<span class="sc">$</span>StudyID, <span class="at">k =</span> <span class="dv">10</span>))</span>
-<span id="cb21-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-11" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-12" tabindex="-1"></a><span class="co"># Train MetaForest model using `caret` for optimal tuning</span></span>
-<span id="cb21-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-13" tabindex="-1"></a>tuned_model <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
-<span id="cb21-14"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-14" tabindex="-1"></a>  <span class="at">y =</span> data_agro<span class="sc">$</span>yi,</span>
-<span id="cb21-15"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-15" tabindex="-1"></a>  <span class="at">x =</span> data_agro[, <span class="fu">c</span>(<span class="st">&quot;Intervention&quot;</span>, <span class="st">&quot;Region&quot;</span>, <span class="st">&quot;StudyID&quot;</span>, <span class="st">&quot;vi&quot;</span>)],</span>
-<span id="cb21-16"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-16" tabindex="-1"></a>  <span class="at">method =</span> <span class="fu">ModelInfo_mf</span>(),           <span class="co"># MetaForest method setup for `caret`</span></span>
-<span id="cb21-17"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-17" tabindex="-1"></a>  <span class="at">trControl =</span> grouped_cv,            <span class="co"># Cross-validation setup</span></span>
-<span id="cb21-18"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-18" tabindex="-1"></a>  <span class="at">tuneGrid =</span> tuning_grid,            <span class="co"># Grid of tuning parameters</span></span>
-<span id="cb21-19"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-19" tabindex="-1"></a>  <span class="at">num.trees =</span> <span class="dv">5000</span>                   <span class="co"># Number of trees for final model</span></span>
-<span id="cb21-20"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-20" tabindex="-1"></a>)</span>
-<span id="cb21-21"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-21" tabindex="-1"></a></span>
-<span id="cb21-22"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-22" tabindex="-1"></a><span class="co"># Step 4: Examine the optimal tuning parameters and model performance</span></span>
-<span id="cb21-23"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-23" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> tuned_model<span class="sc">$</span>results[<span class="fu">which.min</span>(tuned_model<span class="sc">$</span>results<span class="sc">$</span>RMSE), ]</span>
-<span id="cb21-24"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-24" tabindex="-1"></a><span class="fu">print</span>(best_params)</span></code></pre></div>
-<pre><code>##    whichweights mtry min.node.size      RMSE  Rsquared       MAE     RMSESD
-## 20         unif    1             5 0.1813407 0.1106552 0.1465791 0.03107815
-##    RsquaredSD      MAESD
-## 20  0.1610125 0.03347646</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb23-1" tabindex="-1"></a><span class="co"># Step 5: Assess the final model and visualize results</span></span>
-<span id="cb23-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb23-2" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> tuned_model<span class="sc">$</span>finalModel</span>
-<span id="cb23-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb23-3" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb23-4" tabindex="-1"></a><span class="co"># R² from out-of-bag predictions (OOB R² indicates model fit for unseen data)</span></span>
-<span id="cb23-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb23-5" tabindex="-1"></a>r2_oob <span class="ot">&lt;-</span> final_model<span class="sc">$</span>forest<span class="sc">$</span>r.squared</span>
-<span id="cb23-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb23-6" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;OOB R-squared: &quot;</span>, r2_oob)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb21-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-2" tabindex="-1"></a><span class="fu">library</span>(metaforest)</span>
+<span id="cb21-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-3" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb21-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-4" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-5" tabindex="-1"></a><span class="co"># Hypothetical dataset: Replace this with your own meta-analysis data</span></span>
+<span id="cb21-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb21-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-7" tabindex="-1"></a>data_agro <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-8" tabindex="-1"></a>  <span class="at">yi =</span> <span class="fu">rnorm</span>(<span class="dv">60</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>),         <span class="co"># Simulated effect sizes</span></span>
+<span id="cb21-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-9" tabindex="-1"></a>  <span class="at">vi =</span> <span class="fu">min</span>(<span class="fl">0.01</span>,<span class="fu">rnorm</span>(<span class="dv">60</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)),        <span class="co"># Variances of the effect sizes</span></span>
+<span id="cb21-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-10" tabindex="-1"></a>  <span class="at">Intervention =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Fruit&quot;</span>, <span class="st">&quot;Mixed&quot;</span>, <span class="st">&quot;Timber&quot;</span>), <span class="dv">60</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-11" tabindex="-1"></a>  <span class="at">StudyID =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">each =</span> <span class="dv">4</span>),    <span class="co"># 15 unique studies</span></span>
+<span id="cb21-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-12" tabindex="-1"></a>  <span class="at">Region =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Tropical&quot;</span>, <span class="st">&quot;Temperate&quot;</span>), <span class="dv">60</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-13" tabindex="-1"></a>)</span>
+<span id="cb21-14"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-14" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-15" tabindex="-1"></a><span class="co"># Step 1: Run initial MetaForest model with many trees to check convergence</span></span>
+<span id="cb21-16"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-16" tabindex="-1"></a>initial_model <span class="ot">&lt;-</span> <span class="fu">MetaForest</span>(</span>
+<span id="cb21-17"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-17" tabindex="-1"></a>  <span class="at">formula =</span> yi <span class="sc">~</span> Intervention <span class="sc">+</span> Region,</span>
+<span id="cb21-18"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-18" tabindex="-1"></a>  <span class="at">data =</span> data_agro,</span>
+<span id="cb21-19"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-19" tabindex="-1"></a>  <span class="at">study =</span> <span class="st">&quot;StudyID&quot;</span>,</span>
+<span id="cb21-20"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-20" tabindex="-1"></a>  <span class="at">whichweights =</span> <span class="st">&quot;random&quot;</span>,          <span class="co"># Use random-effects weighting scheme</span></span>
+<span id="cb21-21"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-21" tabindex="-1"></a>  <span class="at">num.trees =</span> <span class="dv">15000</span>                 <span class="co"># Set a high number of trees for convergence</span></span>
+<span id="cb21-22"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-22" tabindex="-1"></a>)</span>
+<span id="cb21-23"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-23" tabindex="-1"></a></span>
+<span id="cb21-24"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-24" tabindex="-1"></a><span class="co"># Step 2: Plot convergence trajectory (Mean Squared Error vs. Number of Trees)</span></span>
+<span id="cb21-25"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb21-25" tabindex="-1"></a><span class="fu">plot</span>(initial_model)</span></code></pre></div>
+<p><img src="_main_files/figure-html/metaforest-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-1" tabindex="-1"></a><span class="co"># Step 3: Tune MetaForest model using cross-validation with `caret`</span></span>
+<span id="cb22-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-2" tabindex="-1"></a><span class="co"># Define the parameter grid for tuning</span></span>
+<span id="cb22-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-3" tabindex="-1"></a>tuning_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb22-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-4" tabindex="-1"></a>  <span class="at">whichweights =</span> <span class="fu">c</span>(<span class="st">&quot;random&quot;</span>, <span class="st">&quot;fixed&quot;</span>, <span class="st">&quot;unif&quot;</span>),</span>
+<span id="cb22-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-5" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,                       <span class="co"># Number of variables to possibly split at in each node</span></span>
+<span id="cb22-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-6" tabindex="-1"></a>  <span class="at">min.node.size =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>               <span class="co"># Minimum size of terminal nodes</span></span>
+<span id="cb22-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-7" tabindex="-1"></a>)</span>
+<span id="cb22-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-8" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-9" tabindex="-1"></a><span class="co"># Setup 10-fold cross-validation</span></span>
+<span id="cb22-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-10" tabindex="-1"></a>grouped_cv <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">index =</span> <span class="fu">groupKFold</span>(data_agro<span class="sc">$</span>StudyID, <span class="at">k =</span> <span class="dv">10</span>))</span>
+<span id="cb22-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-11" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-12" tabindex="-1"></a><span class="co"># Train MetaForest model using `caret` for optimal tuning</span></span>
+<span id="cb22-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-13" tabindex="-1"></a>tuned_model <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb22-14"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-14" tabindex="-1"></a>  <span class="at">y =</span> data_agro<span class="sc">$</span>yi,</span>
+<span id="cb22-15"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-15" tabindex="-1"></a>  <span class="at">x =</span> data_agro[, <span class="fu">c</span>(<span class="st">&quot;Intervention&quot;</span>, <span class="st">&quot;Region&quot;</span>, <span class="st">&quot;StudyID&quot;</span>, <span class="st">&quot;vi&quot;</span>)],</span>
+<span id="cb22-16"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-16" tabindex="-1"></a>  <span class="at">method =</span> <span class="fu">ModelInfo_mf</span>(),           <span class="co"># MetaForest method setup for `caret`</span></span>
+<span id="cb22-17"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-17" tabindex="-1"></a>  <span class="at">trControl =</span> grouped_cv,            <span class="co"># Cross-validation setup</span></span>
+<span id="cb22-18"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-18" tabindex="-1"></a>  <span class="at">tuneGrid =</span> tuning_grid,            <span class="co"># Grid of tuning parameters</span></span>
+<span id="cb22-19"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-19" tabindex="-1"></a>  <span class="at">num.trees =</span> <span class="dv">5000</span>                   <span class="co"># Number of trees for final model</span></span>
+<span id="cb22-20"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-20" tabindex="-1"></a>)</span>
+<span id="cb22-21"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-21" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-22" tabindex="-1"></a><span class="co"># Step 4: Examine the optimal tuning parameters and model performance</span></span>
+<span id="cb22-23"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-23" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> tuned_model<span class="sc">$</span>results[<span class="fu">which.min</span>(tuned_model<span class="sc">$</span>results<span class="sc">$</span>RMSE), ]</span>
+<span id="cb22-24"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb22-24" tabindex="-1"></a><span class="fu">print</span>(best_params)</span></code></pre></div>
+<pre><code>##    whichweights mtry min.node.size      RMSE  Rsquared       MAE     RMSESD RsquaredSD      MAESD
+## 20         unif    1             5 0.1813407 0.1106552 0.1465791 0.03107815  0.1610125 0.03347646</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb24-1" tabindex="-1"></a><span class="co"># Step 5: Assess the final model and visualize results</span></span>
+<span id="cb24-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb24-2" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> tuned_model<span class="sc">$</span>finalModel</span>
+<span id="cb24-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb24-4" tabindex="-1"></a><span class="co"># R² from out-of-bag predictions (OOB R² indicates model fit for unseen data)</span></span>
+<span id="cb24-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb24-5" tabindex="-1"></a>r2_oob <span class="ot">&lt;-</span> final_model<span class="sc">$</span>forest<span class="sc">$</span>r.squared</span>
+<span id="cb24-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb24-6" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;OOB R-squared: &quot;</span>, r2_oob)</span></code></pre></div>
 <pre><code>## OOB R-squared:  -0.07849894</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb25-1" tabindex="-1"></a><span class="co"># Variable importance plot to identify influential moderators</span></span>
-<span id="cb25-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb25-2" tabindex="-1"></a><span class="fu">VarImpPlot</span>(final_model)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb26-1" tabindex="-1"></a><span class="co"># Step 6: Visualize partial dependence of top moderators</span></span>
-<span id="cb26-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb26-2" tabindex="-1"></a><span class="fu">PartialDependence</span>(final_model, <span class="at">vars =</span> <span class="fu">names</span>(final_model<span class="sc">$</span>forest<span class="sc">$</span>variable.importance)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">rawdata =</span> <span class="cn">TRUE</span>, <span class="at">pi =</span> <span class="fl">0.95</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb26-1" tabindex="-1"></a><span class="co"># Variable importance plot to identify influential moderators</span></span>
+<span id="cb26-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb26-2" tabindex="-1"></a><span class="fu">VarImpPlot</span>(final_model)</span></code></pre></div>
+<p><img src="_main_files/figure-html/metaforest-2.png" width="672" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-1" tabindex="-1"></a><span class="co"># Step 6: Visualize partial dependence of top moderators</span></span>
+<span id="cb27-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-2" tabindex="-1"></a><span class="fu">PartialDependence</span>(final_model, <span class="at">vars =</span> <span class="fu">names</span>(final_model<span class="sc">$</span>forest<span class="sc">$</span>variable.importance)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">rawdata =</span> <span class="cn">TRUE</span>, <span class="at">pi =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/metaforest-3.png" width="672" /></p>
 </div>
 <div id="handling-random-structures-and-weights-in-meta-forest-models" class="section level4 hasAnchor" number="2.2.3.5">
 <h4><span class="header-section-number">2.2.3.5</span> Handling Random Structures and Weights in Meta-Forest Models<a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#handling-random-structures-and-weights-in-meta-forest-models" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -628,50 +642,45 @@ The first dataset explores the impact of two effect size measures: Standardized 
 <ul>
 <li><strong>Calculation of effect-sizes</strong></li>
 </ul>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> metadat<span class="sc">::</span>dat.curtis1998</span>
-<span id="cb27-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-3" tabindex="-1"></a><span class="co"># Standardized mean differences</span></span>
-<span id="cb27-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-4" tabindex="-1"></a>    SMD <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">&quot;SMD&quot;</span>, <span class="at">n1i =</span> dat<span class="sc">$</span>n1i, <span class="at">n2i =</span> dat<span class="sc">$</span>n2i, <span class="at">m1i =</span> dat<span class="sc">$</span>m1i, <span class="at">m2i =</span> dat<span class="sc">$</span>m2i, <span class="at">sd1i =</span> dat<span class="sc">$</span>sd1i, <span class="at">sd2i =</span> dat<span class="sc">$</span>sd2i)</span>
-<span id="cb27-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-5" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-6" tabindex="-1"></a>    <span class="co"># Ln(RR)</span></span>
-<span id="cb27-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-7" tabindex="-1"></a>    </span>
-<span id="cb27-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb27-8" tabindex="-1"></a>lnRR <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">&quot;ROM&quot;</span>, <span class="at">n1i =</span> dat<span class="sc">$</span>n1i, <span class="at">n2i =</span> dat<span class="sc">$</span>n2i, <span class="at">m1i =</span> dat<span class="sc">$</span>m1i, <span class="at">m2i =</span> dat<span class="sc">$</span>m2i, <span class="at">sd1i =</span> dat<span class="sc">$</span>sd1i, <span class="at">sd2i =</span> dat<span class="sc">$</span>sd2i)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> metadat<span class="sc">::</span>dat.curtis1998</span>
+<span id="cb28-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-3" tabindex="-1"></a><span class="co"># Standardized mean differences</span></span>
+<span id="cb28-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-4" tabindex="-1"></a>    SMD <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">&quot;SMD&quot;</span>, <span class="at">n1i =</span> dat<span class="sc">$</span>n1i, <span class="at">n2i =</span> dat<span class="sc">$</span>n2i, <span class="at">m1i =</span> dat<span class="sc">$</span>m1i, <span class="at">m2i =</span> dat<span class="sc">$</span>m2i, <span class="at">sd1i =</span> dat<span class="sc">$</span>sd1i, <span class="at">sd2i =</span> dat<span class="sc">$</span>sd2i)</span>
+<span id="cb28-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-5" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-6" tabindex="-1"></a>    <span class="co"># Ln(RR)</span></span>
+<span id="cb28-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-7" tabindex="-1"></a>    </span>
+<span id="cb28-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-8" tabindex="-1"></a>lnRR <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">&quot;ROM&quot;</span>, <span class="at">n1i =</span> dat<span class="sc">$</span>n1i, <span class="at">n2i =</span> dat<span class="sc">$</span>n2i, <span class="at">m1i =</span> dat<span class="sc">$</span>m1i, <span class="at">m2i =</span> dat<span class="sc">$</span>m2i, <span class="at">sd1i =</span> dat<span class="sc">$</span>sd1i, <span class="at">sd2i =</span> dat<span class="sc">$</span>sd2i)</span></code></pre></div>
 <ul>
 <li><strong>Model Comparison:</strong></li>
 </ul>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-1" tabindex="-1"></a><span class="co"># Fixed-Effect Model (SMD):</span></span>
-<span id="cb28-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-2" tabindex="-1"></a>fixed_SMD <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> SMD<span class="sc">$</span>yi, <span class="at">vi =</span> SMD<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;FE&quot;</span>, <span class="at">data =</span> dat)</span>
-<span id="cb28-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-3" tabindex="-1"></a>fixed_lnRR <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;FE&quot;</span>, <span class="at">data =</span> dat)</span>
-<span id="cb28-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-4" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-5" tabindex="-1"></a><span class="co"># random effect models </span></span>
-<span id="cb28-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-6" tabindex="-1"></a>random_m_SMD <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> SMD<span class="sc">$</span>yi, <span class="at">vi =</span> SMD<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>, <span class="at">data =</span> dat)</span>
-<span id="cb28-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb28-7" tabindex="-1"></a>random_m_lnRR <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>, <span class="at">data =</span> dat)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-1" tabindex="-1"></a><span class="co"># Fixed-Effect Model (SMD):</span></span>
+<span id="cb29-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-2" tabindex="-1"></a>fixed_SMD <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> SMD<span class="sc">$</span>yi, <span class="at">vi =</span> SMD<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;FE&quot;</span>, <span class="at">data =</span> dat)</span>
+<span id="cb29-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-3" tabindex="-1"></a>fixed_lnRR <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;FE&quot;</span>, <span class="at">data =</span> dat)</span>
+<span id="cb29-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-5" tabindex="-1"></a><span class="co"># random effect models </span></span>
+<span id="cb29-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-6" tabindex="-1"></a>random_m_SMD <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> SMD<span class="sc">$</span>yi, <span class="at">vi =</span> SMD<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>, <span class="at">data =</span> dat)</span>
+<span id="cb29-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-7" tabindex="-1"></a>random_m_lnRR <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>, <span class="at">data =</span> dat)</span></code></pre></div>
 <ul>
 <li><strong>Extraction and comparisons of the results</strong></li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-1" tabindex="-1"></a><span class="co"># Extract relevant results for comparison</span></span>
-<span id="cb29-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-2" tabindex="-1"></a>model_comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb29-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-3" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;Fixed Effect (SMD)&quot;</span>, <span class="st">&quot;Random Effect (SMD)&quot;</span>, <span class="st">&quot;Fixed Effect (lnRR)&quot;</span>, <span class="st">&quot;Random Effect (lnRR)&quot;</span>),</span>
-<span id="cb29-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-4" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>b, random_m_SMD<span class="sc">$</span>b, fixed_lnRR<span class="sc">$</span>b, random_m_lnRR<span class="sc">$</span>b),</span>
-<span id="cb29-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-5" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Lower</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>ci.lb, random_m_SMD<span class="sc">$</span>ci.lb, fixed_lnRR<span class="sc">$</span>ci.lb, random_m_lnRR<span class="sc">$</span>ci.lb),</span>
-<span id="cb29-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Upper</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>ci.ub, random_m_SMD<span class="sc">$</span>ci.ub, fixed_lnRR<span class="sc">$</span>ci.ub, random_m_lnRR<span class="sc">$</span>ci.ub),</span>
-<span id="cb29-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-7" tabindex="-1"></a>  <span class="at">Tau2 =</span> <span class="fu">c</span>(<span class="cn">NA</span>, random_m_SMD<span class="sc">$</span>tau2, <span class="cn">NA</span>, random_m_lnRR<span class="sc">$</span>tau2),</span>
-<span id="cb29-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-8" tabindex="-1"></a>  <span class="at">I2 =</span> <span class="fu">c</span>(<span class="cn">NA</span>, random_m_SMD<span class="sc">$</span>I2, <span class="cn">NA</span>, random_m_lnRR<span class="sc">$</span>I2),</span>
-<span id="cb29-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-9" tabindex="-1"></a>  <span class="at">p.value =</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>pval, random_m_SMD<span class="sc">$</span>pval, fixed_lnRR<span class="sc">$</span>pval, random_m_lnRR<span class="sc">$</span>pval)</span>
-<span id="cb29-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-10" tabindex="-1"></a>)</span>
-<span id="cb29-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-11" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-12" tabindex="-1"></a><span class="co"># Affichage des résultats sous forme de tableau interactif avec reactable</span></span>
-<span id="cb29-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb29-13" tabindex="-1"></a>model_comparison</span></code></pre></div>
-<pre><code>##                  Model  Estimate X95..CI.Lower X95..CI.Upper       Tau2
-## 1   Fixed Effect (SMD) 1.0200088     0.9104184      1.129599         NA
-## 2  Random Effect (SMD) 1.2845731     1.0619587      1.507187 0.74922116
-## 3  Fixed Effect (lnRR) 0.2088297     0.1981535      0.219506         NA
-## 4 Random Effect (lnRR) 0.2552978     0.2164785      0.294117 0.02620568
-##         I2      p.value
-## 1       NA 2.382399e-74
-## 2 69.73831 1.173970e-29
-## 3       NA 0.000000e+00
-## 4 88.89735 5.133963e-38</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-1" tabindex="-1"></a><span class="co"># Extract relevant results for comparison</span></span>
+<span id="cb30-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-2" tabindex="-1"></a>model_comparison <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb30-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-3" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;Fixed Effect (SMD)&quot;</span>, <span class="st">&quot;Random Effect (SMD)&quot;</span>, <span class="st">&quot;Fixed Effect (lnRR)&quot;</span>, <span class="st">&quot;Random Effect (lnRR)&quot;</span>),</span>
+<span id="cb30-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-4" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>b, random_m_SMD<span class="sc">$</span>b, fixed_lnRR<span class="sc">$</span>b, random_m_lnRR<span class="sc">$</span>b),</span>
+<span id="cb30-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-5" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Lower</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>ci.lb, random_m_SMD<span class="sc">$</span>ci.lb, fixed_lnRR<span class="sc">$</span>ci.lb, random_m_lnRR<span class="sc">$</span>ci.lb),</span>
+<span id="cb30-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Upper</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>ci.ub, random_m_SMD<span class="sc">$</span>ci.ub, fixed_lnRR<span class="sc">$</span>ci.ub, random_m_lnRR<span class="sc">$</span>ci.ub),</span>
+<span id="cb30-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-7" tabindex="-1"></a>  <span class="at">Tau2 =</span> <span class="fu">c</span>(<span class="cn">NA</span>, random_m_SMD<span class="sc">$</span>tau2, <span class="cn">NA</span>, random_m_lnRR<span class="sc">$</span>tau2),</span>
+<span id="cb30-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-8" tabindex="-1"></a>  <span class="at">I2 =</span> <span class="fu">c</span>(<span class="cn">NA</span>, random_m_SMD<span class="sc">$</span>I2, <span class="cn">NA</span>, random_m_lnRR<span class="sc">$</span>I2),</span>
+<span id="cb30-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-9" tabindex="-1"></a>  <span class="at">p.value =</span> <span class="fu">c</span>(fixed_SMD<span class="sc">$</span>pval, random_m_SMD<span class="sc">$</span>pval, fixed_lnRR<span class="sc">$</span>pval, random_m_lnRR<span class="sc">$</span>pval)</span>
+<span id="cb30-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-10" tabindex="-1"></a>)</span>
+<span id="cb30-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-11" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-12" tabindex="-1"></a><span class="co"># Affichage des résultats sous forme de tableau interactif avec reactable</span></span>
+<span id="cb30-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb30-13" tabindex="-1"></a>model_comparison</span></code></pre></div>
+<pre><code>##                  Model  Estimate X95..CI.Lower X95..CI.Upper       Tau2       I2      p.value
+## 1   Fixed Effect (SMD) 1.0200088     0.9104184      1.129599         NA       NA 2.382399e-74
+## 2  Random Effect (SMD) 1.2845731     1.0619587      1.507187 0.74922116 69.73831 1.173970e-29
+## 3  Fixed Effect (lnRR) 0.2088297     0.1981535      0.219506         NA       NA 0.000000e+00
+## 4 Random Effect (lnRR) 0.2552978     0.2164785      0.294117 0.02620568 88.89735 5.133963e-38</code></pre>
 <ul>
 <li><strong>Interpretation:</strong> The contrast in point estimates and confidence intervals between the SMD and lnRR models underscores the impact of effect size metrics on study-level variability. This comparison reveals how different metrics can shift the weight of certain studies and alter pooled estimates.</li>
 </ul>
@@ -692,27 +701,27 @@ The first dataset explores the impact of two effect size measures: Standardized 
 <ul>
 <li><strong>Random-Effects Model Using DerSimonian-Laird (DL)</strong>:</li>
 </ul>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb31-1" tabindex="-1"></a>res_dl <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;DL&quot;</span>, <span class="at">data =</span> dat)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb32-1" tabindex="-1"></a>res_dl <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;DL&quot;</span>, <span class="at">data =</span> dat)</span></code></pre></div>
 <ul>
 <li><strong>Random-Effects Model Using REML</strong>:</li>
 </ul>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb32-1" tabindex="-1"></a>res_reml <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>, <span class="at">data =</span> dat)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-1" tabindex="-1"></a>res_reml <span class="ot">&lt;-</span> <span class="fu">rma</span>(<span class="at">yi =</span> lnRR<span class="sc">$</span>yi, <span class="at">vi =</span> lnRR<span class="sc">$</span>vi, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>, <span class="at">data =</span> dat)</span></code></pre></div>
 <ul>
 <li><strong>Extraction and comparisons of the results</strong></li>
 </ul>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-1" tabindex="-1"></a><span class="co"># Extract relevant results for comparison</span></span>
-<span id="cb33-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-2" tabindex="-1"></a>model_comparison2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb33-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-3" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;DL&quot;</span>, <span class="st">&quot;REML&quot;</span>),</span>
-<span id="cb33-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-4" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>b, res_reml<span class="sc">$</span>b),</span>
-<span id="cb33-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-5" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Lower</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>ci.lb, res_reml<span class="sc">$</span>ci.lb),</span>
-<span id="cb33-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Upper</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>ci.ub, res_reml<span class="sc">$</span>ci.ub),</span>
-<span id="cb33-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-7" tabindex="-1"></a>  <span class="at">Tau2 =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>tau2, res_reml<span class="sc">$</span>tau2),</span>
-<span id="cb33-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-8" tabindex="-1"></a>  <span class="at">I2 =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>I2, res_reml<span class="sc">$</span>I2),</span>
-<span id="cb33-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-9" tabindex="-1"></a>  <span class="at">p.value =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>pval, res_reml<span class="sc">$</span>pval)</span>
-<span id="cb33-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-10" tabindex="-1"></a>)</span>
-<span id="cb33-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-11" tabindex="-1"></a></span>
-<span id="cb33-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-12" tabindex="-1"></a><span class="co"># Affichage des résultats sous forme de tableau interactif avec reactable</span></span>
-<span id="cb33-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb33-13" tabindex="-1"></a>model_comparison2</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-1" tabindex="-1"></a><span class="co"># Extract relevant results for comparison</span></span>
+<span id="cb34-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-2" tabindex="-1"></a>model_comparison2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb34-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-3" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;DL&quot;</span>, <span class="st">&quot;REML&quot;</span>),</span>
+<span id="cb34-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-4" tabindex="-1"></a>  <span class="at">Estimate =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>b, res_reml<span class="sc">$</span>b),</span>
+<span id="cb34-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-5" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Lower</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>ci.lb, res_reml<span class="sc">$</span>ci.lb),</span>
+<span id="cb34-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">95% CI Upper</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>ci.ub, res_reml<span class="sc">$</span>ci.ub),</span>
+<span id="cb34-7"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-7" tabindex="-1"></a>  <span class="at">Tau2 =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>tau2, res_reml<span class="sc">$</span>tau2),</span>
+<span id="cb34-8"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-8" tabindex="-1"></a>  <span class="at">I2 =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>I2, res_reml<span class="sc">$</span>I2),</span>
+<span id="cb34-9"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-9" tabindex="-1"></a>  <span class="at">p.value =</span> <span class="fu">c</span>(res_dl<span class="sc">$</span>pval, res_reml<span class="sc">$</span>pval)</span>
+<span id="cb34-10"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-10" tabindex="-1"></a>)</span>
+<span id="cb34-11"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-11" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-12" tabindex="-1"></a><span class="co"># Affichage des résultats sous forme de tableau interactif avec reactable</span></span>
+<span id="cb34-13"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb34-13" tabindex="-1"></a>model_comparison2</span></code></pre></div>
 <pre><code>##   Model  Estimate X95..CI.Lower X95..CI.Upper       Tau2       I2      p.value
 ## 1    DL 0.2530579     0.2168455     0.2892704 0.02164714 86.86638 1.065093e-42
 ## 2  REML 0.2552978     0.2164785     0.2941170 0.02620568 88.89735 5.133963e-38</code></pre>
@@ -734,12 +743,12 @@ The first dataset explores the impact of two effect size measures: Standardized 
 <ul>
 <li><strong>Three-Level model setup</strong>:</li>
 </ul>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb35-1" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">cbind</span>(dat, lnRR)</span>
-<span id="cb35-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb35-2" tabindex="-1"></a><span class="co"># Three-level meta-analysis</span></span>
-<span id="cb35-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb35-3" tabindex="-1"></a>three_level_m <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(<span class="at">yi =</span> yi, <span class="at">V =</span> vi, <span class="at">random =</span> <span class="fu">list</span>(<span class="sc">~</span><span class="dv">1</span> <span class="sc">|</span> id, <span class="sc">~</span><span class="dv">1</span> <span class="sc">|</span> paper), <span class="at">data =</span> dat)</span>
-<span id="cb35-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb35-4" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb35-5" tabindex="-1"></a><span class="co"># Two level meta-analysis</span></span>
-<span id="cb35-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb35-6" tabindex="-1"></a>two_level_m <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(<span class="at">yi =</span> yi, <span class="at">V =</span> vi, <span class="at">random =</span> <span class="fu">list</span>(<span class="sc">~</span><span class="dv">1</span> <span class="sc">|</span> id), <span class="at">data =</span> dat)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-1" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">cbind</span>(dat, lnRR)</span>
+<span id="cb36-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-2" tabindex="-1"></a><span class="co"># Three-level meta-analysis</span></span>
+<span id="cb36-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-3" tabindex="-1"></a>three_level_m <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(<span class="at">yi =</span> yi, <span class="at">V =</span> vi, <span class="at">random =</span> <span class="fu">list</span>(<span class="sc">~</span><span class="dv">1</span> <span class="sc">|</span> id, <span class="sc">~</span><span class="dv">1</span> <span class="sc">|</span> paper), <span class="at">data =</span> dat)</span>
+<span id="cb36-4"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-5" tabindex="-1"></a><span class="co"># Two level meta-analysis</span></span>
+<span id="cb36-6"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-6" tabindex="-1"></a>two_level_m <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(<span class="at">yi =</span> yi, <span class="at">V =</span> vi, <span class="at">random =</span> <span class="fu">list</span>(<span class="sc">~</span><span class="dv">1</span> <span class="sc">|</span> id), <span class="at">data =</span> dat)</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Faire le tableau de comparaison de outputs</li>
 <li>AIC pour sélection de modèles</li>
@@ -801,9 +810,9 @@ The first dataset explores the impact of two effect size measures: Standardized 
 <ul>
 <li><p>Define the random effects first to capture variance due to grouping or clustering (e.g., study-level random effects, site-level random effects).</p></li>
 <li><p>Use the likelihood ratio test (<code>anova()</code>) to compare models with and without each random component:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-1" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper, <span class="at">data =</span> dat)</span>
-<span id="cb36-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-2" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper<span class="sc">/</span>id, <span class="at">data =</span> dat)</span>
-<span id="cb36-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb36-3" tabindex="-1"></a><span class="fu">anova</span>(model1, model2)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb37-1" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper, <span class="at">data =</span> dat)</span>
+<span id="cb37-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb37-2" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper<span class="sc">/</span>id, <span class="at">data =</span> dat)</span>
+<span id="cb37-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb37-3" tabindex="-1"></a><span class="fu">anova</span>(model1, model2)</span></code></pre></div>
 <pre><code>## 
 ##         df      AIC      BIC     AICc   logLik      LRT   pval       QE 
 ## Full     3  -8.2204  -0.3750  -7.9730   7.1102                 769.0185 
@@ -815,9 +824,9 @@ The first dataset explores the impact of two effect size measures: Standardized 
 <ul>
 <li><p>After selecting the optimal random structure, test different combinations of fixed effects (e.g., covariates, moderators).</p></li>
 <li><p>Compare models using AIC, AICc, and BIC. Include one fixed effect at a time and use <code>anova()</code> to see if adding predictors improves fit:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb38-1" tabindex="-1"></a>model_fixed1 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">mods =</span> <span class="sc">~</span> species, <span class="at">random=</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper<span class="sc">/</span>id, <span class="at">data =</span> dat)</span>
-<span id="cb38-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb38-2" tabindex="-1"></a>model_fixed2 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">mods =</span> <span class="sc">~</span> species <span class="sc">+</span> fungrp,<span class="at">random=</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper<span class="sc">/</span>id, <span class="at">data =</span> dat)</span>
-<span id="cb38-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb38-3" tabindex="-1"></a><span class="fu">anova</span>(model_fixed1, model_fixed2)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb39-1" tabindex="-1"></a>model_fixed1 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">mods =</span> <span class="sc">~</span> species, <span class="at">random=</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper<span class="sc">/</span>id, <span class="at">data =</span> dat)</span>
+<span id="cb39-2"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb39-2" tabindex="-1"></a>model_fixed2 <span class="ot">&lt;-</span> <span class="fu">rma.mv</span>(yi, vi, <span class="at">mods =</span> <span class="sc">~</span> species <span class="sc">+</span> fungrp,<span class="at">random=</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> paper<span class="sc">/</span>id, <span class="at">data =</span> dat)</span>
+<span id="cb39-3"><a href="comparative-meta-analytic-methods-for-evidence-synthesis.html#cb39-3" tabindex="-1"></a><span class="fu">anova</span>(model_fixed1, model_fixed2)</span></code></pre></div>
 <pre><code>## 
 ##         df     AIC      BIC     AICc logLik    LRT   pval       QE 
 ## Full    38 73.7811 156.9879 183.5588 1.1095               334.3528 

@@ -88,7 +88,7 @@ Effect sizes can be calculated using a variety of metrics depending on the type 
 Below, we present a table showing some of the most common effect size metrics, calculated for the same hypothetical data used in the visual demonstration above.
 
 | **Metric**                             | **Formula/Definition**                      | **Interpretation**                                       |
-|--------------------|-----------------------|-----------------------------|
+|----------------------------------------|---------------------------------------------|----------------------------------------------------------|
 | **Mean Difference**                    | Mean_Treatment - Mean_Control               | Difference in mean values between the groups.            |
 | **Standardized Mean Difference (SMD)** | (Mean_Treatment - Mean_Control) / SD_pooled | Cohen's *d* or Hedges' *g* for continuous variables.     |
 | **Odds Ratio (OR)**                    | (Odds_Treatment / Odds_Control)             | Odds of an event occurring in the treatment vs. control. |
@@ -99,7 +99,7 @@ Below, we present a table showing some of the most common effect size metrics, c
 Using the simulated data above, let’s compare the groups using several of these metrics:
 
 | **Effect Size Metric** | Case study 1 | **Case study 2** | Case study 3 | Case study 4 |
-|---------------|---------------|---------------|---------------|---------------|
+|------------------------|--------------|------------------|--------------|--------------|
 
 |                     |     |      |      |      |
 |---------------------|-----|------|------|------|

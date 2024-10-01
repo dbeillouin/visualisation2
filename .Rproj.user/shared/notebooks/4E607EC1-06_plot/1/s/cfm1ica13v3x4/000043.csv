@@ -1,0 +1,6 @@
+"0","### add the vertical reference line at 0
+{segments(0, -1, 0, k + 1.6, col = coll)}
+"
+"2","Error in segments(0, -1, 0, k + 1.6, col = coll) : 
+  plot.new has not been called yet
+"

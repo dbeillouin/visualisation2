@@ -1,0 +1,1 @@
+{"frames":[{"func":"segments(0, -1, 0, k + 1.6, col = coll)","file":"","line_number":1,"end_line_number":1,"character_number":2,"end_character_number":40}],"message":"Error in segments(0, -1, 0, k + 1.6, col = coll) : \n  plot.new has not been called yet\n"}

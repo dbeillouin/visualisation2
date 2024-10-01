@@ -1,0 +1,239 @@
+"0","# Fit the Bayesian random-effects model with specified priors
+bayes_model <- brm(
+  formula = paste0(response_var, "" | se("", se_var, "") ~ 1 + (1 | paper)""),
+  data = dat,
+  family = gaussian,
+  prior = c(
+    prior(normal(0, 1), class = ""Intercept""),   # Prior for the intercept
+    prior(cauchy(0, 1), class = ""sd"")            # Prior for the standard deviation of the random effect
+  ),
+  iter = 200,
+  warmup = 100,
+  cores = 4,
+  chains = 4,
+  seed = 14
+)
+"
+"2","Compiling Stan program...
+"
+"2","Start sampling
+"
+"1","starting worker pid=22728 on localhost:11532 at 21:45:27.560
+"
+"1","starting worker pid=22741 on localhost:11532 at 21:45:27.656
+"
+"1","starting worker pid=22754 on localhost:11532 at 21:45:27.742
+"
+"1","starting worker pid=22767 on localhost:11532 at 21:45:27.819
+"
+"1","
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
+"
+"1","Chain 1: 
+Chain 1: Gradient evaluation took 3.3e-05 seconds
+"
+"1","Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: WARNING: There aren't enough warmup iterations to fit the
+Chain 1:          three stages of adaptation as currently configured.
+Chain 1:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 1:          the given number of warmup iterations:
+Chain 1:            init_buffer = 15
+Chain 1:            adapt_window = 75
+Chain 1:            term_buffer = 10
+Chain 1: 
+"
+"1","Chain 1: Iteration:   1 / 200 [  0%]  (Warmup)
+"
+"1","Chain 1: Iteration:  20 / 200 [ 10%]  (Warmup)
+"
+"1","Chain 1: Iteration:  40 / 200 [ 20%]  (Warmup)
+"
+"1","Chain 1: Iteration:  60 / 200 [ 30%]  (Warmup)
+"
+"1","Chain 1: Iteration:  80 / 200 [ 40%]  (Warmup)
+"
+"1","Chain 1: Iteration: 100 / 200 [ 50%]  (Warmup)
+"
+"1","Chain 1: Iteration: 101 / 200 [ 50%]  (Sampling)
+"
+"1","Chain 1: Iteration: 120 / 200 [ 60%]  (Sampling)
+"
+"1","Chain 1: Iteration: 140 / 200 [ 70%]  (Sampling)
+"
+"1","Chain 1: Iteration: 160 / 200 [ 80%]  (Sampling)
+"
+"1","Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
+"
+"1","Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
+"
+"1","Chain 1: 
+Chain 1:  Elapsed Time: 0.172 seconds (Warm-up)
+Chain 1:                0.17 seconds (Sampling)
+Chain 1"
+"1",":                0.342 seconds (Total)
+Chain 1: 
+"
+"1","
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN "
+"1","2).
+"
+"1","Chain 2: "
+"1","
+Chain 2: Gradient evaluation took 4.1e-05 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: WARNING: There aren't enough warmup iterations to fit the
+Chain 2:          three stages of adaptation as currently configured.
+Chain 2:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 2:          the given number of warmup iterations:
+Chain 2:            init_buffer = 15
+Chain 2:            adapt_window = 75
+Chain 2:            term_buffer = 10
+Chain 2: 
+"
+"1","Chain 2: Iteration:   1 / 200 [  0%]  (Warmup)
+"
+"1","Chain 2: Iteration:  20 / 200 [ 10%]  (Warmup)
+"
+"1","Chain 2: Iteration:  40 / 200 [ 20%]  (Warmup)
+"
+"1","Chain 2: Iteration:  60 / 200 [ 30%]  (Warmup)
+"
+"1","Chain 2: Iteration:  80 / 200 [ 40%]  (Warmup)
+"
+"1","Chain 2: Iteration: 100 / 200 [ 50%]  (Warmup)
+"
+"1","Chain 2: Iteration: 101 / 200 [ 50%]  (Sampling)
+"
+"1","Chain 2: Iteration: 120 / 200 [ 60%]  (Sampling)
+"
+"1","
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
+"
+"1","Chain 3: 
+Chain 3: Gradient evaluation took 4.2e-05 seconds
+"
+"1","Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.42 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 3: WARNING: There aren't enough warmup iterations to fit the
+Chain 3:          three stages of adaptation as currently configured.
+Chain 3:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 3:          the given number of warmup iterations:
+Chain 3:            init_buffer = 15
+Chain 3:            adapt_window = 75
+Chain 3:            term_buffer = 10
+Chain 3: 
+"
+"1","Chain 3: Iteration:   1 / 200 [  0%]  (Warmup)
+"
+"1","Chain 3: Iteration:  20 / 200 [ 10%]  (Warmup)
+"
+"1","Chain 2: Iteration: 140 / 200 [ 70%]  (Sampling)
+"
+"1","Chain 3: Iteration:  40 / 200 [ 20%]  (Warmup)
+"
+"1","Chain 2: Iteration: 160 / 200 [ 80%]  (Sampling)
+"
+"1","Chain 3: Iteration:  60 / 200 [ 30%]  (Warmup)
+"
+"1","Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
+"
+"1","Chain 3: Iteration:  80 / 200 [ 40%]  (Warmup)
+"
+"1","Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
+"
+"1","Chain 2: 
+Chain 2:  Elapsed Time: 0.17 seconds (Warm-up)
+Chain 2: "
+"1","               0.18 seconds (Sampling)
+Chain 2:                0.35 seconds (Total)
+Chain 2: 
+"
+"1","Chain 3: Iteration: 100 / 200 [ 50%]  (Warmup)
+"
+"1","Chain 3: Iteration: 101 / 200 [ 50%]  (Sampling)
+"
+"1","
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
+"
+"1","Chain 4: 
+Chain 4: Gradient evaluation took 3.2e-05 seconds
+"
+"1","Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.32 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 4: WARNING: There aren't enough warmup iterations to fit the
+Chain 4:          three stages of adaptation as currently configured.
+Chain 4:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 4:          the given number of warmup iterations:
+Chain 4:            init_buffer = 15
+Chain 4:            adapt_window = 75
+Chain 4:            term_buffer = 10
+Chain 4: 
+"
+"1","Chain 4: Iteration:   1 / 200 [  0%]  (Warmup)
+"
+"1","Chain 3: Iteration: 120 / 200 [ 60%]  (Sampling)
+"
+"1","Chain 4: Iteration:  20 / 200 [ 10%]  (Warmup)
+"
+"1","Chain 3: Iteration: 140 / 200 [ 70%]  (Sampling)
+"
+"1","Chain 4: Iteration:  40 / 200 [ 20%]  (Warmup)
+"
+"1","Chain 3: Iteration: 160 / 200 [ 80%]  (Sampling)
+"
+"1","Chain 4: Iteration:  60 / 200 [ 30%]  (Warmup)
+"
+"1","Chain 3: Iteration: 180 / 200 [ 90%]  (Sampling)
+"
+"1","Chain 4: Iteration:  80 / 200 [ 40%]  (Warmup)
+"
+"1","Chain 3: Iteration: 200 / 200 [100%]  (Sampling)
+"
+"1","Chain 3: 
+Chain 3:  Elapsed Time: 0.146 seconds (Warm-up)
+Chain 3:                0.176 seconds (Sampling)"
+"1","
+Chain 3:                0.322 seconds (Total)
+Chain 3: 
+"
+"1","Chain 4: Iteration: 100 / 200 [ 50%]  (Warmup)
+"
+"1","Chain 4: Iteration: 101 / 200 [ 50%]  (Sampling)
+"
+"1","Chain 4: Iteration: 120 / 200 [ 60%]  (Sampling)
+"
+"1","Chain 4: Iteration: 140 / 200 [ 70%]  (Sampling)
+"
+"1","Chain 4: Iteration: 160 / 200 [ 80%]  (Sampling)
+"
+"1","Chain 4: Iteration: 180 / 200 [ 90%]  (Sampling)
+"
+"1","Chain 4: Iteration: 200 / 200 [100%]  (Sampling)
+"
+"1","Chain 4: 
+Chain 4:  Elapsed Time: 0.173 seconds (Warm-up)
+Chain 4:                0.17 seconds (Sampling)"
+"1","
+Chain 4:                0.343 seconds (Total)
+Chain 4: 
+"
+"2","Warning:"
+"2"," Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-ess
+"
+"2","Warning:"
+"2"," Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-ess
+"

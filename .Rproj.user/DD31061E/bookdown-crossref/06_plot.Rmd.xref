@@ -1,0 +1,22 @@
+h1:plotting-meta-analytical-results Plotting meta-analytical results
+h3:overview Overview
+h3:example-1-forest-plot-with-metafor Example 1: Forest plot with metafor
+h3:example-2-forest-plot-with-meta Example 2: Forest plot with meta
+h3:example-3-forest-plot-with-ggplot Example 3: Forest plot with ggplot
+h3:example-4-orchard-plots Example 4: Orchard plots
+h1:analysis-and-visualization-of-publication-bias Analysis and Visualization of Publication Bias
+h3:funnel-plots Funnel Plots
+h4:understanding-funnel-plots Understanding Funnel Plots
+h3:trim-and-fill-method Trim and Fill Method
+h4:example-of-using-trim-and-fill Example of Using Trim and Fill
+h3:egger-test Egger Test
+h4:conducting-the-egger-test Conducting the Egger Test
+h3:rosenthals-fail-safe-n Rosenthal’s Fail-Safe N
+h4:example-of-calculating-fail-safe-n Example of Calculating Fail-Safe N
+h3:robust-bayesian-meta-analysis-robma Robust Bayesian Meta-Analysis (RoBMA)
+h4:setting-up-and-running-a-robma-model-in-r Setting Up and Running a RoBMA Model in R
+h4:key-outputs-and-interpretation Key Outputs and Interpretation
+h4:visualizing-publication-bias-with-robma Visualizing Publication Bias with RoBMA
+h4:advantages-of-using-robma Advantages of Using RoBMA
+h4:limitations-to-consider Limitations to Consider
+

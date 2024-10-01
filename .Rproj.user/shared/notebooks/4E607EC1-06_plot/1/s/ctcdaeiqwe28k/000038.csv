@@ -1,0 +1,32 @@
+"0","do.call(grid.arrange, c(plot_list, ncol = 1))  # Arrange plots in a single column
+"
+"2","Warning in geom_point(aes(x = res$b, y = 1, color = ""Overall Mean""), size = 5,  :"
+"2","
+ "
+"2"," [38;5;232mAll aesthetics have length 1, but the data has 8 rows.
+[36mℹ[38;5;232m Please consider using `annotate()` or provide this layer with data containing a single
+  row.[39m
+"
+"1","[38;5;232mOrientation inferred to be along y-axis; override with `position_quasirandom(orientation
+= 'x')`[39m
+"
+"2","Warning in geom_point(aes(x = res$b, y = 1, color = ""Overall Mean""), size = 5,  :"
+"2","
+ "
+"2"," [38;5;232mAll aesthetics have length 1, but the data has 13 rows.
+[36mℹ[38;5;232m Please consider using `annotate()` or provide this layer with data containing a single
+  row.[39m
+"
+"1","[38;5;232mOrientation inferred to be along y-axis; override with `position_quasirandom(orientation
+= 'x')`[39m
+"
+"2","Warning in geom_point(aes(x = res$b, y = 1, color = ""Overall Mean""), size = 5,  :"
+"2","
+ "
+"2"," [38;5;232mAll aesthetics have length 1, but the data has 9 rows.
+[36mℹ[38;5;232m Please consider using `annotate()` or provide this layer with data containing a single
+  row.[39m
+"
+"1","[38;5;232mOrientation inferred to be along y-axis; override with `position_quasirandom(orientation
+= 'x')`[39m
+"

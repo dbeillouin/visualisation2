@@ -1,0 +1,32 @@
+h1:comparative-meta-analytic-methods-for-evidence-synthesis Comparative meta-analytic methods for evidence synthesis
+h2:equal-effects-model Equal-Effects Model
+h3:example-data Example Data
+h3:fitting-the-equal-effects-model Fitting the Equal-Effects Model
+h3:comparison-of-results Comparison of Results
+h2:random-effects-model Random-Effects Model
+h3:fitting-the-random-effects-model Fitting the Random-Effects Model
+h3:comparison-of-results-1 Comparison of Results
+h4:comparison-with-the-meta-package Comparison with the  Package
+h4:bayesian-meta-analysis Bayesian Meta-Analysis
+h3:meta-forest-analysis-a-comparison-with-classical-meta-analytic-models Meta-Forest Analysis: A Comparison with Classical Meta-Analytic Models
+h4:key-differences-and-advantages Key Differences and Advantages
+h4:potential-drawbacks-of-meta-forest Potential Drawbacks of Meta-Forest
+h4:practical-application-when-to-use-meta-forest Practical Application: When to Use Meta-Forest?
+h4:example-of-implementing-a-meta-forest-model Example of Implementing a Meta-Forest Model
+h4:handling-random-structures-and-weights-in-meta-forest-models Handling Random Structures and Weights in Meta-Forest Models
+h2:conclusion Conclusion
+h2:practical-implementations Practical implementations
+h3:example-1-fixed-vs.-random-meta-analysis-models Example 1: fixed vs. random Meta-Analysis models
+h3:example-2-comparing-heterogeneity-across-models Example 2: Comparing Heterogeneity across models
+h3:example-3-multi-level-meta-analysis-with-hierarchical-data Example 3: Multi-Level meta-Analysis with hierarchical Data
+h3:model-selection-in-meta-analysis Model Selection in Meta-Analysis
+h4:selection-criteria-for-model-comparison 
+h4:choosing-between-fixed-and-random-effects-models 
+h4:comparing-models-fixed-and-random-structures 
+h4:selecting-the-optimal-model-practical-considerations 
+h1:analysing-model-variability Analysing model variability
+h3:using-parametric-and-non-parametric-bootstrapping-to-estimate-confidence-intervals-in-meta-analyses Using Parametric and Non-Parametric Bootstrapping to Estimate Confidence Intervals in Meta-Analyses
+h3:parametric-bootstrapping-step-by-step-example Parametric Bootstrapping: Step-by-Step Example
+h3:non-parametric-bootstrapping-step-by-step-example Non-Parametric Bootstrapping: Step-by-Step Example
+h3:conclusion-1 Conclusion
+
